@@ -16,7 +16,7 @@ export const LaunchesList = () => {
     setCurrentPage(1);
     // 3
     return setFilteredLaunches(launches.filter(
-        (launch: Launch) => (showAll || launch.favorite) && (!searchText || launch.mission_name.includes(searchText))
+        (launch: Launch) => (showAll || launch.favorite) && (!searchText || launch.mission_name.toLowerCase().includes(searchText.toLowerCase()))
       )
     );
   };
