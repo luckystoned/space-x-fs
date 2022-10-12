@@ -19,12 +19,13 @@ const processLaunches = (userId, launches, rockets) => __awaiter(void 0, void 0,
     const userFavorites = yield (0, favorites_1.getUserFavorites)(userId);
     //1) Fetch data from SpaceX / Merge data from launches and rockets and return new output
     const outputLaunches = launches.map((launch) => {
-        const { details, flight_number, mission_name, links: { mission_patch }, rocket: { rocket_name, rocket_id } } = launch;
+        const { details, flight_number, mission_name, launch_date_unix, links: { mission_patch }, rocket: { rocket_name, rocket_id } } = launch;
         const { cost_per_launch, company, active } = (0, findRocket_1.findRocket)(rockets, rocket_id);
         const userFavorite = findFavorite(userFavorites, flight_number);
         return {
             flight_number,
             mission_name,
+            launch_date_unix,
             mission_patch,
             details,
             rocket: {

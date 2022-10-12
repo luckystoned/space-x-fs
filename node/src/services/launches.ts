@@ -16,6 +16,7 @@ export const processLaunches = async (userId, launches, rockets) => {
       details,
       flight_number,
       mission_name,
+      launch_date_unix,
       links: { mission_patch },
       rocket: { rocket_name, rocket_id }
     } = launch;
@@ -25,6 +26,7 @@ export const processLaunches = async (userId, launches, rockets) => {
     return {
       flight_number,
       mission_name,
+      launch_date_unix,
       mission_patch,
       details,
       rocket: {
