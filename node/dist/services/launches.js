@@ -13,12 +13,15 @@ exports.processLaunches = void 0;
 /* eslint-disable camelcase */
 const favorites_1 = require("./favorites");
 const findRocket_1 = require("../utils/findRocket");
+const findFavorite = (favorites, flightNumber) => favorites.find((favorite) => favorite.flight_number === flightNumber);
 const processLaunches = (userId, launches, rockets) => __awaiter(void 0, void 0, void 0, function* () {
+    // Get user's favorites and merge them to outpoutLaunches
     const userFavorites = yield (0, favorites_1.getUserFavorites)(userId);
     //1) Fetch data from SpaceX / Merge data from launches and rockets and return new output
     const outputLaunches = launches.map((launch) => {
         const { details, flight_number, mission_name, links: { mission_patch }, rocket: { rocket_name, rocket_id } } = launch;
         const { cost_per_launch, company, active } = (0, findRocket_1.findRocket)(rockets, rocket_id);
+        const userFavorite = findFavorite(userFavorites, flight_number);
         return {
             flight_number,
             mission_name,
@@ -30,7 +33,8 @@ const processLaunches = (userId, launches, rockets) => __awaiter(void 0, void 0,
                 active,
                 cost_per_launch,
                 company
-            }
+            },
+            favorite: !!userFavorite
         };
     });
     return outputLaunches;

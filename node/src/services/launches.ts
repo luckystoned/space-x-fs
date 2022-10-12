@@ -2,8 +2,12 @@
 import { getUserFavorites } from "./favorites";
 import { findRocket } from "../utils/findRocket";
 
+const findFavorite = (favorites, flightNumber) =>
+  favorites.find((favorite) => favorite.flight_number === flightNumber);
+
 
 export const processLaunches = async (userId, launches, rockets) => {
+  // Get user's favorites and merge them to outpoutLaunches
   const userFavorites = await getUserFavorites(userId);
 
   //1) Fetch data from SpaceX / Merge data from launches and rockets and return new output
@@ -16,6 +20,7 @@ export const processLaunches = async (userId, launches, rockets) => {
       rocket: { rocket_name, rocket_id }
     } = launch;
     const { cost_per_launch, company, active } = findRocket(rockets, rocket_id);
+    const userFavorite = findFavorite(userFavorites, flight_number);
 
     return {
       flight_number,
@@ -28,7 +33,8 @@ export const processLaunches = async (userId, launches, rockets) => {
         active,
         cost_per_launch,
         company
-      }
+      },
+      favorite: !!userFavorite
     }
   });
 

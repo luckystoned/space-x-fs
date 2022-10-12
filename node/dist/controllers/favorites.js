@@ -16,12 +16,15 @@ const addFavorite = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const user_id = req.currentUserId;
     const flight_number = req.params.flight_number;
     const favoritesRepo = AppDataSource.getRepository(Favorites);
+    console.log("addFavorite", user_id, flight_number);
     const currentFav = yield favoritesRepo.find({
         where: {
             flight_number,
             user_id
         }
     });
+    //Todo: check if flight_number exists in launches table. If not, return 404
+    //Todo: check if user exists in users table. If not, return 404
     if (!currentFav.length) {
         yield favoritesRepo.insert({
             flight_number,
@@ -37,6 +40,8 @@ const removeFavorite = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const user_id = req.currentUserId;
     const flight_number = req.params.flight_number;
     const favoritesRepo = AppDataSource.getRepository(Favorites);
+    //Todo: check if flight_number exists in launches table. If not, return 404
+    //Todo: check if user exists in users table. If not, return 404
     yield favoritesRepo.delete({
         flight_number,
         user_id
