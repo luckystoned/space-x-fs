@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useEffect, useContext } from "react";
+import { useContext } from "react";
 import { Layout } from "components";
 import { AuthContext } from "contexts/AuthContext";
 import { Login } from "pages";
