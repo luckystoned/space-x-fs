@@ -1,0 +1,2 @@
+//Find rocket by id, rockets is an array of rockets from /rockets endpoint and rocketId is the id of the rocket from /launches endpoint
+export const findRocket = (rockets, rocketId) => rockets.find((rocket) => rocket.rocket_id === rocketId);

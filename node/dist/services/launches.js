@@ -12,13 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.processLaunches = void 0;
 /* eslint-disable camelcase */
 const favorites_1 = require("./favorites");
-const findRocket = (rockets, rocketId) => rockets.find((rocket) => rocket.rocket_id === rocketId);
+const findRocket_1 = require("../utils/findRocket");
 const processLaunches = (userId, launches, rockets) => __awaiter(void 0, void 0, void 0, function* () {
     const userFavorites = yield (0, favorites_1.getUserFavorites)(userId);
-    //return lauches and rockets mapped to a new object
-    return launches.map((launch) => {
+    //1) Fetch data from SpaceX / Merge data from launches and rockets and return new output
+    const outputLaunches = launches.map((launch) => {
         const { details, flight_number, mission_name, links: { mission_patch }, rocket: { rocket_name, rocket_id } } = launch;
-        const { cost_per_launch, company, active } = findRocket(rockets, rocket_id);
+        const { cost_per_launch, company, active } = (0, findRocket_1.findRocket)(rockets, rocket_id);
         return {
             flight_number,
             mission_name,
@@ -30,8 +30,9 @@ const processLaunches = (userId, launches, rockets) => __awaiter(void 0, void 0,
                 active,
                 cost_per_launch,
                 company
-            },
+            }
         };
     });
+    return outputLaunches;
 });
 exports.processLaunches = processLaunches;
