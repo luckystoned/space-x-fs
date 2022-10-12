@@ -1,3 +1,6 @@
+// @ts-nocheck
+import { useContext } from "react";
+import { AuthContext } from "contexts/AuthContext";
 import { Launch } from "types";
 import { addFavorite, removeFavorite } from "api/favorites";
 import { ReactComponent as Star } from "assets/images/star.svg";
@@ -9,10 +12,12 @@ interface LaunchCardProps {
 }
 
 export const LaunchCard = ({ launch, updateFavorite }: LaunchCardProps) => {
+  const { token } = useContext(AuthContext);
   const handleClickFavorite = async () => {
     await (launch.favorite
-      ? removeFavorite(launch.flight_number)
-      : addFavorite(launch.flight_number));
+      ? removeFavorite(launch.flight_number, token)
+      : addFavorite(launch.flight_number, token));
+      updateFavorite();
   };
 
   return (
