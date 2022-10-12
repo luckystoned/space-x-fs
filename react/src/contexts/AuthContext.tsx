@@ -14,7 +14,7 @@ interface AuthProviderValue {
   setToken?: Dispatch<SetStateAction<string | null>>;
 }
 
-export const AuthContext = createContext<AuthProviderValue>({});
+export const AuthContext = createContext<AuthProviderValue | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactElement }) => {
   const [token, setToken] = useState<string | null>(null);

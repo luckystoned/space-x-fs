@@ -1,8 +1,16 @@
+// @ts-nocheck
+import { login } from "api";
+import { useContext } from "react";
+import { AuthContext } from "contexts/AuthContext";
 import "./index.scss";
 
 export const Login = () => {
+
+  const { setToken } = useContext(AuthContext);
+
   const handleLogin = async () => {
-    // 2
+    const token = await login();
+    setToken(token);
   };
 
   return (
